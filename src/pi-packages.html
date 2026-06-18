@@ -198,6 +198,15 @@
             margin-bottom: 0.9rem;
         }
         .card-index .num { color: var(--brand); }
+        .card-index .badge-manager {
+            color: var(--brand);
+            border: 1px solid var(--brand);
+            padding: 0.1rem 0.4rem;
+            font-size: 0.55rem;
+            letter-spacing: 0.2em;
+            font-weight: 600;
+        }
+        .package-card.is-manager { border-left: 2px solid var(--brand); }
 
         .package-header {
             display: flex;
@@ -580,6 +589,24 @@
                 </div>
             </div>
 
+            <div class="package-card is-manager">
+                <div class="card-index">
+                    <span class="num">13</span>
+                    <span class="badge-manager">MGR</span>
+                </div>
+                <div class="package-header">
+                    <a href="https://github.com/znythlabs/pi-package-manager" target="_blank" class="package-name">pi-package-manager</a>
+                    <a href="https://github.com/znythlabs/pi-package-manager" target="_blank" class="header-link" title="View source on GitHub"><svg class="icon" viewBox="0 0 24 24"><path d="M19 19H5V5H10V3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V14H19V19ZM14 3V5H17.59L7.76 14.83L9.17 16.24L19 6.41V10H21V3H14Z"/></svg></a>
+                </div>
+                <div class="package-desc">Web dashboard for browsing, installing, and removing pi packages. This card's host — adds the <code>/packages</code> slash command. No action button: it's the manager.</div>
+                <div class="package-footer">
+                    <button class="copy-btn" onclick="copyCommand(this, 'pi install npm:pi-package-manager')">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M16 1H4C2.9 1 2 1.9 2 3V17H4V3H16V1ZM19 5H8C6.9 5 6 5.9 6 7V21C6 22.1 6.9 23 8 23H19C20.1 23 21 20.1 21 19V7C21 5.9 20.1 5 19 5ZM19 21H8V7H19V21Z"/></svg>
+                        <span class="cmd-text">pi install npm:pi-package-manager</span>
+                    </button>
+                </div>
+            </div>
+
         </div>
 
         <div class="frame-footer">
@@ -624,6 +651,7 @@
         { name: 'pi-paster',             source: 'npm:pi-paster' },
         { name: 'pi-markdown-preview',   source: 'npm:pi-markdown-preview' },
         { name: '@llblab/pi-telegram',   source: 'npm:@llblab/pi-telegram' },
+        { name: 'pi-package-manager',    source: 'npm:pi-package-manager', role: 'manager' },
     ];
 
     const ICON_INSTALL   = '<svg class="ic" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>';
@@ -739,6 +767,7 @@
             const name = nameEl.textContent.trim();
             const meta = PACKAGES.find(p => p.name === name);
             if (!meta) return;
+            if (meta.role === 'manager') return;  // manager card has no install/uninstall button
             const footer = card.querySelector('.package-footer');
             if (!footer || footer.querySelector('.action-btn')) return;
             const btn = actionButton(meta.source);
