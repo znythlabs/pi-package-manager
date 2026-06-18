@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Pi Packages</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@1,500;1,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0A0A0A;
+            --card-bg: #111111;
+            --text-main: #E5E5E5;
+            --text-sub: #888888;
+            --brand: #ADFF2F;
+            --border: #222222;
+            --line: #2A2A2A;
+            --line-bright: #3A3A3A;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            background-position: center center;
+            color: var(--text-main);
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .frame {
+            max-width: 1100px;
+            width: 100%;
+            margin-top: 2rem;
+            border: 1px solid var(--line-bright);
+            position: relative;
+            background: linear-gradient(var(--card-bg), var(--card-bg)) padding-box;
+        }
+
+        .title-block {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            align-items: stretch;
+            border-bottom: 1px solid var(--line-bright);
+        }
+
+        .title-main {
+            padding: 2.5rem 2rem 2rem;
+            border-right: 1px solid var(--line);
+        }
+
+        .eyebrow {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--text-sub);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .eyebrow::before {
+            content: '';
+            width: 22px;
+            height: 1px;
+            background: var(--brand);
+            display: inline-block;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 3.6rem;
+            font-weight: 700;
+            line-height: 1.05;
+            margin-bottom: 0.6rem;
+            color: var(--brand);
+            letter-spacing: -1px;
+        }
+
+        .title-sub {
+            color: var(--text-sub);
+            font-size: 0.85rem;
+            font-family: 'Fira Code', monospace;
+            line-height: 1.5;
+            max-width: 46ch;
+        }
+
+        .meta-rail {
+            display: grid;
+            grid-template-rows: repeat(3, 1fr);
+            align-items: stretch;
+        }
+        .meta-cell {
+            padding: 0.9rem 1.4rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 0.2rem;
+            min-width: 150px;
+        }
+        .meta-cell + .meta-cell { border-top: 1px solid var(--line); }
+        .meta-label {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.6rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--text-sub);
+        }
+        .meta-value {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            color: var(--brand);
+            font-weight: 500;
+        }
+
+        .section-bar {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid var(--line);
+        }
+        .section-bar .label {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--text-sub);
+            white-space: nowrap;
+        }
+        .section-bar .rule {
+            flex: 1;
+            height: 1px;
+            background: repeating-linear-gradient(90deg, var(--line-bright) 0 6px, transparent 6px 12px);
+        }
+        .section-bar .count {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.15em;
+            color: var(--brand);
+            white-space: nowrap;
+        }
+
+        .package-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1px;
+            background: var(--line);
+        }
+
+        .package-card {
+            background-color: var(--bg-color);
+            padding: 1.4rem 1.4rem 1.1rem;
+            transition: background-color 0.25s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 200px;
+            overflow: hidden;
+        }
+
+        .package-card::after {
+            content: '';
+            position: absolute;
+            top: var(--mouse-y, 50%);
+            left: var(--mouse-x, 50%);
+            transform: translate(-50%, -50%);
+            width: 250%;
+            height: 250%;
+            background: radial-gradient(circle, rgba(173, 255, 47, 0.10) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .package-card:hover::after { opacity: 1; }
+        .package-card:hover { background-color: var(--card-bg); }
+        .package-card > * { position: relative; z-index: 1; }
+
+        .card-index {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.6rem;
+            letter-spacing: 0.15em;
+            color: var(--text-sub);
+            margin-bottom: 0.9rem;
+        }
+        .card-index .num { color: var(--brand); }
+
+        .package-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .package-name {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--brand);
+            text-decoration: none;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .package-desc {
+            color: var(--text-sub);
+            font-size: 0.75rem;
+            line-height: 1.6;
+            margin-bottom: 1.1rem;
+            flex-grow: 1;
+            font-family: 'Fira Code', monospace;
+        }
+
+        .package-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 0.85rem;
+            border-top: 1px solid var(--line);
+            margin-top: auto;
+            gap: 0.5rem;
+        }
+
+        .copy-btn {
+            background-color: transparent;
+            color: var(--brand);
+            border: 1px solid var(--line-bright);
+            padding: 0.35rem 0.55rem;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.65rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            width: auto;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+
+        .copy-btn:hover { background-color: var(--brand); color: var(--bg-color); border-color: var(--brand); }
+        .copy-btn.copied { background-color: var(--brand); color: var(--bg-color); border-color: var(--brand); }
+
+        .action-btn {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.65rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            padding: 0.35rem 0.6rem;
+            border-radius: 0;
+            transition: all 0.18s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            white-space: nowrap;
+            border: 1px solid var(--line-bright);
+            background: transparent;
+            color: var(--text-sub);
+            text-transform: uppercase;
+        }
+        .action-btn .ic { width: 11px; height: 11px; fill: currentColor; flex-shrink: 0; }
+        .action-btn.is-installed { border-color: var(--brand); color: var(--brand); }
+        .action-btn.is-installed:hover { background: var(--brand); color: var(--bg-color); }
+        .action-btn.is-missing { border-color: var(--line-bright); color: var(--text-main); }
+        .action-btn.is-missing:hover { border-color: var(--brand); color: var(--brand); }
+        .action-btn.is-working { opacity: 0.6; cursor: progress; pointer-events: none; }
+        .action-btn.is-flash { animation: flash-ok 0.9s ease; }
+        @keyframes flash-ok { 0% { background: var(--brand); color: var(--bg-color); } 100% { background: transparent; } }
+
+        .source-link {
+            color: var(--text-sub);
+            text-decoration: none;
+            font-size: 0.68rem;
+            font-family: 'Fira Code', monospace;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            transition: color 0.2s;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .source-link:hover { color: var(--brand); }
+
+        .icon { width: 12px; height: 12px; fill: currentColor; flex-shrink: 0; }
+
+        .frame-footer {
+            border-top: 1px solid var(--line-bright);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.85rem 2rem;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.6rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--text-sub);
+        }
+        .frame-footer .dot { color: var(--brand); animation: blink 2s steps(2) infinite; }
+        @keyframes blink { 50% { opacity: 0.25; } }
+
+        .status-pill { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--text-sub); }
+        .status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--text-sub); display: inline-block; }
+
+        @media (max-width: 720px) {
+            .title-block { grid-template-columns: 1fr; }
+            .title-main { border-right: none; border-bottom: 1px solid var(--line); }
+            .meta-rail { grid-template-columns: repeat(3, 1fr); grid-template-rows: none; }
+            .meta-cell + .meta-cell { border-top: none; border-left: 1px solid var(--line); }
+            .package-footer { flex-direction: column; gap: 0.75rem; align-items: stretch; }
+            h1 { font-size: 2.6rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="frame">
+        <div class="title-block">
+            <div class="title-main">
+                <div class="eyebrow">Pi Agent · Environment Manifest</div>
+                <h1>My Pi Packages</h1>
+                <p class="title-sub">Extensions, skills, and tools currently active in this environment.</p>
+            </div>
+            <div class="meta-rail">
+                <div class="meta-cell">
+                    <span class="meta-label">Total</span>
+                    <span class="meta-value" id="meta-count">--</span>
+                </div>
+                <div class="meta-cell">
+                    <span class="meta-label">Registry</span>
+                    <span class="meta-value">npm</span>
+                </div>
+                <div class="meta-cell">
+                    <span class="meta-label">Status</span>
+                    <span class="meta-value">ACTIVE</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-bar">
+            <span class="label">Installed Extensions</span>
+            <span class="rule"></span>
+            <span class="count" id="section-count">[ -- INSTALLED ]</span>
+        </div>
+
+        <div class="package-list" id="packages">
+
+            <div class="package-card">
+                <div class="card-index"><span class="num">01</span><span class="plus">+</span></div>
+                <div class="package-header">
+                    <a href="https://pi.dev/packages/pi-lean-ctx" target="_blank" class="package-name">pi-lean-ctx</a>
+                </div>
+                <div class="package-desc">Routes bash/read/grep/find/ls through lean-ctx for strong token savings. Embedded MCP bridge adds a persistent session cache so unchanged re-reads cost ~13 tokens.</div>
+                <div class="package-footer">
+                    <button class="copy-btn" onclick="copyCommand(this, 'pi install npm:pi-lean-ctx')">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M16 1H4C2.9 1 2 1.9 2 3V17H4V3H16V1ZM19 5H8C6.9 5 6 5.9 6 7V21C6 22.1 6.9 23 8 23H19C20.1 23 21 22.1 21 21V7C21 5.9 20.1 5 19 5ZM19 21H8V7H19V21Z"/></svg>
+                        <span class="cmd-text">pi install npm:pi-lean-ctx</span>
+                    </button>
+                    <a href="https://pi.dev/packages/pi-lean-ctx" target="_blank" class="source-link">View on Pi.dev<svg class="icon" viewBox="0 0 24 24"><path d="M19 19H5V5H10V3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V14H19V19ZM14 3V5H17.59L7.76 14.83L9.17 16.24L19 6.41V10H21V3H14Z"/></svg></a>
+                </div>
+            </div>
+
+            <div class="package-card">
+                <div class="card-index"><span class="num">02</span><span class="plus">+</span></div>
+                <div class="package-header">
+                    <a href="https://pi.dev/packages/pi-btw" target="_blank" class="package-name">pi-btw</a>
+                </div>
+                <div class="package-desc">A pi extension for parallel side conversations with /btw.</div>
+                <div class="package-footer">
+                    <button class="copy-btn" onclick="copyCommand(this, 'pi install npm:pi-btw')">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M16 1H4C2.9 1 2 1.9 2 3V17H4V3H16V1ZM19 5H8C6.9 5 6 5.9 6 7V21C6 22.1 6.9 23 8 23H19C20.1 23 21 22.1 21 21V7C21 5.9 20.1 5 19 5ZM19 21H8V7H19V21Z"/></svg>
+                        <span class="cmd-text">pi install npm:pi-btw</span>
+                    </button>
+                    <a href="https://pi.dev/packages/pi-btw" target="_blank" class="source-link">View on Pi.dev<svg class="icon" viewBox="0 0 24 24"><path d="M19 19H5V5H10V3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V14H19V19ZM14 3V5H17.59L7.76 14.83L9.17 16.24L19 6.41V10H21V3H14Z"/></svg></a>
+                </div>
+            </div>
+
+            <div class="package-card">
+                <div class="card-index"><span class="num">03</span><span class="plus">+</span></div>
+                <div class="package-header">
+                    <a href="https://pi.dev/packages/pi-intercom" target="_blank" class="package-name">pi-intercom</a>
+                </div>
+                <div class="package-desc">Direct 1:1 messaging between pi sessions on the same machine. Send context, findings, or requests from one session to another.</div>
+                <div class="package-footer">
+                    <button class="copy-btn" onclick="copyCommand(this, 'pi install npm:pi-intercom')">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M16 1H4C2.9 1 2 1.9 2 3V17H4V3H16V1ZM19 5H8C6.9 5 6 5.9 6 7V21C6 22.1 6.9 23 8 23H19C20.1 23 21 22.1 21 21V7C21 5.9 20.1 5 19 5ZM19 21H8V7H19V21Z"/></svg>
+                        <span class="cmd-text">pi install npm:pi-intercom</span>
+                    </button>
+                    <a href="https://pi.dev/packages/pi-intercom" target="_blank" class="source-link">View on Pi.dev<svg class="icon" viewBox="0 0 24 24"><path d="M19 19H5V5H10V3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V14H19V19ZM14 3V5H17.59L7.76 14.83L9.17 16.24L19 6.41V10H21V3H14Z"/></svg></a>
+                </div>
+            </div>
+
+            <div class="package-card">
+                <div class="card-index"><span class="num">04</span><span class="plus">+</span></div>
+                <div class="package-header">
+                    <a href="https://pi.dev/packages/pi-goal" target="_blank" class="package-name">pi-goal</a>
+                </div>
+                <div class="package-desc">Persistent autonomous goals for pi — /goal loops until complete, paused, or budget-limited.</div>
+                <div class="package-footer">
+                    <button class="copy-btn" onclick="copyCommand(this, 'pi install npm:pi-goal')">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M16 1H4C2.9 1 2 1.9 2 3V17H4V3H16V1ZM19 5H8C6.9 5 6 5.9 6 7V21C6 22.1 6.9 23 8 23H19C20.1 23 21 22.1 21 21V7C21 5.9 20.1 5 19 5ZM19 21H8V7H19V21Z"/></svg>
+                        <span class="cmd-text">pi install npm:pi-goal</span>
+                    </button>
+                    <a href="https://pi.dev/packages/pi-goal" target="_blank" class="source-link">View on Pi.dev<svg class="icon" viewBox="0 0 24 24"><path d="M19 19H5V5H10V3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V14H19V19ZM14 3V5H17.59L7.76 14.83L9.17 16.24L19 6.41V10H21V3H14Z"/></svg></a>
+                </div>
+            </div>
+
+            <div class="package-card">
+                <div class="card-index"><span class="num">05</span><span class="plus">+</span></div>
+                <div class="package-header">
+                    <a href="https://pi.dev/packages/pi-web-access" target="_blank" class="package-name">pi-web-access</a>
+                </div>
+                <div class="package-desc">Web search, URL fetching, GitHub repo cloning, PDF extraction, YouTube video understanding, and local video analysis for Pi.</div>
+                <div class="package-footer">
+                    <button class="copy-btn" onclick="copyCommand(this, 'pi install npm:pi-web-access')">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M16 1H4C2.9 1 2 1.9 2 3V17H4V3H16V1ZM19 5H8C6.9 5 6 5.9 6 7V21C6 22.1 6.9 23 8 23H19C20.1 23 21 22.1 21 21V7C21 5.9 20.1 5 19 5ZM19 21H8V7H19V21Z"/></svg>
+                        <span class="cmd-text">pi install npm:pi-web-access</span>
+                    </button>
+                    <a href="https://pi.dev/packages/pi-web-access" target="_blank" class="source-link">View on Pi.dev<svg class="icon" viewBox="0 0 24 24"><path d="M19 19H5V5H10V3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V14H19V19ZM14 3V5H17.59L7.76 14.83L9.17 16.24L19 6.41V10H21V3H14Z"/></svg></a>
+                </div>
+            </div>
+
+            <div class="package-card">
+                <div class="card-index"><span class="num">06</span><span class="plus">+</span></div>
+                <div class="package-header">
+                    <a href="https://pi.dev/packages/pi-hermes-memory" target="_blank" class="package-name">pi-hermes-memory</a>
+                </div>
+                <div class="package-desc">Persistent memory + session search + secret scanning for Pi. Token-aware policy-only memory, SQLite FTS5 search, auto-consolidation, procedural skills.</div>
+                <div class="package-footer">
+                    <button class="copy-btn" onclick="copyCommand(this, 'pi install npm:pi-hermes-memory')">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M16 1H4C2.9 1 2 1.9 2 3V17H4V3H16V1ZM19 5H8C6.9 5 6 5.9 6 7V21C6 22.1 6.9 23 8 23H19C20.1 23 21 20.1 21 19V7C21 5.9 20.1 5 19 5ZM19 21H8V7H19V21Z"/></svg>
+                        <span class="cmd-text">pi install npm:pi-hermes-memory</span>
+                    </button>
+                    <a href="https://pi.dev/packages/pi-hermes-memory" target="_blank" class="source-link">View on Pi.dev<svg class="icon" viewBox="0 0 24 24"><path d="M19 19H5V5H10V3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V14H19V19ZM14 3V5H17.59L7.76 14.83L9.17 16.24L19 6.41V10H21V3H14Z"/></svg></a>
+                </div>
+            </div>
+
+            <div class="package-card">
+                <div class="card-index"><span class="num">07</span><span class="plus">+</span></div>
+                <div class="package-header">
+                    <a href="https://pi.dev/packages/pi-subagents" target="_blank" class="package-name">pi-subagents</a>
+                </div>
+                <div class="package-desc">Pi extension for delegating tasks to subagents with chains, parallel execution, and TUI clarification.</div>
+                <div class="package-footer">
+                    <button class="copy-btn" onclick="copyCommand(this, 'pi install npm:pi-subagents')">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M16 1H4C2.9 1 2 1.9 2 3V17H4V3H16V1ZM19 5H8C6.9 5 6 5.9 6 7V21C6 22.1 6.9 23 8 23H19C20.1 23 21 20.1 21 19V7C21 5.9 20.1 5 19 5ZM19 21H8V7H19V21Z"/></svg>
+                        <span class="cmd-text">pi install npm:pi-subagents</span>
+                    </button>
+                    <a href="https://pi.dev/packages/pi-subagents" target="_blank" class="source-link">View on Pi.dev<svg class="icon" viewBox="0 0 24 24"><path d="M19 19H5V5H10V3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V14H19V19ZM14 3V5H17.59L7.76 14.83L9.17 16.24L19 6.41V10H21V3H14Z"/></svg></a>
+                </div>
+            </div>
+
+            <div class="package-card">
+                <div class="card-index"><span class="num">08</span><span class="plus">+</span></div>
+                <div class="package-header">
+                    <a href="https://pi.dev/packages/@gonrocca/zero-pi" target="_blank" class="package-name">@gonrocca/zero-pi</a>
+                </div>
+                <div class="package-desc">zero spec-driven development workflow (explore → plan → build → veredicto) with per-phase model autotune and token-efficient batched builds.</div>
+                <div class="package-footer">
+                    <button class="copy-btn" onclick="copyCommand(this, 'pi install npm:@gonrocca/zero-pi')">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M16 1H4C2.9 1 2 1.9 2 3V17H4V3H16V1ZM19 5H8C6.9 5 6 5.9 6 7V21C6 22.1 6.9 23 8 23H19C20.1 23 21 20.1 21 19V7C21 5.9 20.1 5 19 5ZM19 21H8V7H19V21Z"/></svg>
+                        <span class="cmd-text">pi install npm:@gonrocca/zero-pi</span>
+                    </button>
+                    <a href="https://pi.dev/packages/@gonrocca/zero-pi" target="_blank" class="source-link">View on Pi.dev<svg class="icon" viewBox="0 0 24 24"><path d="M19 19H5V5H10V3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V14H19V19ZM14 3V5H17.59L7.76 14.83L9.17 16.24L19 6.41V10H21V3H14Z"/></svg></a>
+                </div>
+            </div>
+
+            <div class="package-card">
+                <div class="card-index"><span class="num">09</span><span class="plus">+</span></div>
+                <div class="package-header">
+                    <a href="https://pi.dev/packages/pi-mcp-adapter" target="_blank" class="package-name">pi-mcp-adapter</a>
+                </div>
+                <div class="package-desc">MCP (Model Context Protocol) adapter extension for Pi coding agent.</div>
+                <div class="package-footer">
+                    <button class="copy-btn" onclick="copyCommand(this, 'pi install npm:pi-mcp-adapter')">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M16 1H4C2.9 1 2 1.9 2 3V17H4V3H16V1ZM19 5H8C6.9 5 6 5.9 6 7V21C6 22.1 6.9 23 8 23H19C20.1 23 21 20.1 21 19V7C21 5.9 20.1 5 19 5ZM19 21H8V7H19V21Z"/></svg>
+                        <span class="cmd-text">pi install npm:pi-mcp-adapter</span>
+                    </button>
+                    <a href="https://pi.dev/packages/pi-mcp-adapter" target="_blank" class="source-link">View on Pi.dev<svg class="icon" viewBox="0 0 24 24"><path d="M19 19H5V5H10V3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V14H19V19ZM14 3V5H17.59L7.76 14.83L9.17 16.24L19 6.41V10H21V3H14Z"/></svg></a>
+                </div>
+            </div>
+
+            <div class="package-card">
+                <div class="card-index"><span class="num">10</span><span class="plus">+</span></div>
+                <div class="package-header">
+                    <a href="https://pi.dev/packages/pi-paster" target="_blank" class="package-name">pi-paster</a>
+                </div>
+                <div class="package-desc">Pi extension that turns pasted image paths into first-class image attachments.</div>
+                <div class="package-footer">
+                    <button class="copy-btn" onclick="copyCommand(this, 'pi install npm:pi-paster')">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M16 1H4C2.9 1 2 1.9 2 3V17H4V3H16V1ZM19 5H8C6.9 5 6 5.9 6 7V21C6 22.1 6.9 23 8 23H19C20.1 23 21 20.1 21 19V7C21 5.9 20.1 5 19 5ZM19 21H8V7H19V21Z"/></svg>
+                        <span class="cmd-text">pi install npm:pi-paster</span>
+                    </button>
+                    <a href="https://pi.dev/packages/pi-paster" target="_blank" class="source-link">View on Pi.dev<svg class="icon" viewBox="0 0 24 24"><path d="M19 19H5V5H10V3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V14H19V19ZM14 3V5H17.59L7.76 14.83L9.17 16.24L19 6.41V10H21V3H14Z"/></svg></a>
+                </div>
+            </div>
+
+            <div class="package-card">
+                <div class="card-index"><span class="num">11</span><span class="plus">+</span></div>
+                <div class="package-header">
+                    <a href="https://pi.dev/packages/pi-markdown-preview" target="_blank" class="package-name">pi-markdown-preview</a>
+                </div>
+                <div class="package-desc">Markdown and LaTeX preview rendering for pi — export to PDF, HTML, or PNG.</div>
+                <div class="package-footer">
+                    <button class="copy-btn" onclick="copyCommand(this, 'pi install npm:pi-markdown-preview')">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M16 1H4C2.9 1 2 1.9 2 3V17H4V3H16V1ZM19 5H8C6.9 5 6 5.9 6 7V21C6 22.1 6.9 23 8 23H19C20.1 23 21 20.1 21 19V7C21 5.9 20.1 5 19 5ZM19 21H8V7H19V21Z"/></svg>
+                        <span class="cmd-text">pi install npm:pi-markdown-preview</span>
+                    </button>
+                    <a href="https://pi.dev/packages/pi-markdown-preview" target="_blank" class="source-link">View on Pi.dev<svg class="icon" viewBox="0 0 24 24"><path d="M19 19H5V5H10V3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V14H19V19ZM14 3V5H17.59L7.76 14.83L9.17 16.24L19 6.41V10H21V3H14Z"/></svg></a>
+                </div>
+            </div>
+
+            <div class="package-card">
+                <div class="card-index"><span class="num">12</span><span class="plus">+</span></div>
+                <div class="package-header">
+                    <a href="https://pi.dev/packages/@llblab/pi-telegram" target="_blank" class="package-name">@llblab/pi-telegram</a>
+                </div>
+                <div class="package-desc">Telegram runtime adapter for pi — turns a private Telegram DM into a session-local operator console.</div>
+                <div class="package-footer">
+                    <button class="copy-btn" onclick="copyCommand(this, 'pi install npm:@llblab/pi-telegram')">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M16 1H4C2.9 1 2 1.9 2 3V17H4V3H16V1ZM19 5H8C6.9 5 6 5.9 6 7V21C6 22.1 6.9 23 8 23H19C20.1 23 21 20.1 21 19V7C21 5.9 20.1 5 19 5ZM19 21H8V7H19V21Z"/></svg>
+                        <span class="cmd-text">pi install npm:@llblab/pi-telegram</span>
+                    </button>
+                    <a href="https://pi.dev/packages/@llblab/pi-telegram" target="_blank" class="source-link">View on Pi.dev<svg class="icon" viewBox="0 0 24 24"><path d="M19 19H5V5H10V3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V14H19V19ZM14 3V5H17.59L7.76 14.83L9.17 16.24L19 6.41V10H21V3H14Z"/></svg></a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="frame-footer">
+            <span>My Pi Packages · <span class="dot">●</span> live manifest</span>
+            <span class="status-pill">
+                <span class="status-dot" id="status-dot"></span>
+                <span id="bridge-status" data-level="idle">starting…</span>
+            </span>
+        </div>
+    </div>
+
+    <script>
+    (async function () {
+        const PROBE = ['http://127.0.0.1:7878', 'http://localhost:7878'];
+        let base = '';
+        if (location.protocol === 'http:' || location.protocol === 'https:') {
+            base = location.origin;
+        } else {
+            for (const u of PROBE) {
+                try {
+                    const r = await fetch(u + '/api/health', { cache: 'no-store' });
+                    if (r.ok) { base = u; break; }
+                } catch (e) {}
+            }
+        }
+        window.PI_BASE = base;
+        window.dispatchEvent(new Event('pi-bridge-ready'));
+    })();
+    </script>
+
+    <script>
+    const PACKAGES = [
+        { name: 'pi-lean-ctx',           source: 'npm:pi-lean-ctx' },
+        { name: 'pi-btw',                source: 'npm:pi-btw' },
+        { name: 'pi-intercom',           source: 'npm:pi-intercom' },
+        { name: 'pi-goal',               source: 'npm:pi-goal' },
+        { name: 'pi-web-access',         source: 'npm:pi-web-access' },
+        { name: 'pi-hermes-memory',      source: 'npm:pi-hermes-memory' },
+        { name: 'pi-subagents',          source: 'npm:pi-subagents' },
+        { name: '@gonrocca/zero-pi',     source: 'npm:@gonrocca/zero-pi' },
+        { name: 'pi-mcp-adapter',        source: 'npm:pi-mcp-adapter' },
+        { name: 'pi-paster',             source: 'npm:pi-paster' },
+        { name: 'pi-markdown-preview',   source: 'npm:pi-markdown-preview' },
+        { name: '@llblab/pi-telegram',   source: 'npm:@llblab/pi-telegram' },
+    ];
+
+    const ICON_INSTALL   = '<svg class="ic" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>';
+    const ICON_UNINSTALL = '<svg class="ic" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>';
+    const ICON_SPINNER   = '<svg class="ic" viewBox="0 0 24 24"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46A7.93 7.93 0 0 0 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74A7.93 7.93 0 0 0 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>';
+
+    function actionButton(source) {
+        const btn = document.createElement('button');
+        btn.className = 'action-btn is-missing';
+        btn.type = 'button';
+        btn.dataset.source = source;
+        btn.innerHTML = '<span class="lbl">--</span>';
+        return btn;
+    }
+
+    function renderButtonState(btn, installed, working) {
+        btn.classList.remove('is-installed', 'is-missing', 'is-working');
+        const lbl = btn.querySelector('.lbl');
+        if (working) {
+            btn.classList.add('is-working');
+            btn.innerHTML = ICON_SPINNER + '<span class="lbl">Working…</span>';
+            return;
+        }
+        if (installed) {
+            btn.classList.add('is-installed');
+            btn.innerHTML = ICON_UNINSTALL + '<span class="lbl">Uninstall</span>';
+            btn.title = 'Installed — click to uninstall';
+        } else {
+            btn.classList.add('is-missing');
+            btn.innerHTML = ICON_INSTALL + '<span class="lbl">Install</span>';
+            btn.title = 'Not installed — click to install';
+        }
+    }
+
+    async function api(path, opts) {
+        const base = window.PI_BASE;
+        if (!base) throw new Error('bridge unavailable');
+        const r = await fetch(base + path, {
+            cache: 'no-store',
+            headers: { 'Content-Type': 'application/json' },
+            ...opts,
+        });
+        let body = null;
+        try { body = await r.json(); } catch (e) {}
+        if (!r.ok) {
+            const msg = (body && body.error) || (body && body.stderr) || ('HTTP ' + r.status);
+            throw new Error(msg);
+        }
+        return body || {};
+    }
+
+    function applyState(sources) {
+        const count = Object.keys(sources || {}).length;
+        const c1 = document.getElementById('meta-count');
+        const c2 = document.getElementById('section-count');
+        if (c1) c1.textContent = String(count).padStart(2, '0');
+        if (c2) c2.textContent = '[ ' + count + ' INSTALLED ]';
+        document.querySelectorAll('.action-btn').forEach(btn => {
+            if (btn.classList.contains('is-working')) return;
+            const installed = !!(sources && sources[btn.dataset.source]);
+            renderButtonState(btn, installed, false);
+        });
+        const total = PACKAGES.length;
+        setStatus('connected · ' + count + '/' + total + ' installed', 'ok');
+    }
+
+    function setStatus(text, level) {
+        const el = document.getElementById('bridge-status');
+        const dot = document.getElementById('status-dot');
+        if (el) { el.textContent = text; el.dataset.level = level || 'idle'; }
+        if (dot) {
+            const color = ({ ok: 'var(--brand)', warn: '#FFD66B', err: '#FF6B6B', idle: 'var(--text-sub)' })[level || 'idle'] || 'var(--text-sub)';
+            dot.style.background = color;
+        }
+    }
+
+    async function refreshState() {
+        try {
+            const s = await api('/api/state');
+            applyState(s.sources);
+        } catch (e) {
+            setStatus('offline — start pi-package-manager', 'err');
+        }
+    }
+
+    async function handleAction(btn, source) {
+        const wasInstalled = btn.classList.contains('is-installed');
+        const endpoint = wasInstalled ? '/api/uninstall' : '/api/install';
+        renderButtonState(btn, wasInstalled, true);
+        setStatus((wasInstalled ? 'uninstalling ' : 'installing ') + source + '…', 'idle');
+        try {
+            const r = await api(endpoint, {
+                method: 'POST',
+                body: JSON.stringify({ source }),
+            });
+            applyState(r.sources);
+            setStatus(source + ': ' + (wasInstalled ? 'uninstalled' : 'installed') + ' ✓', 'ok');
+            btn.classList.add('is-flash');
+            setTimeout(() => btn.classList.remove('is-flash'), 900);
+            if (typeof r.installed === 'boolean') {
+                renderButtonState(btn, r.installed, false);
+            }
+        } catch (e) {
+            setStatus(source + ' failed: ' + e.message, 'err');
+            renderButtonState(btn, wasInstalled, false);
+        }
+    }
+
+    function initButtons() {
+        document.querySelectorAll('.package-card').forEach(card => {
+            const nameEl = card.querySelector('.package-name');
+            if (!nameEl) return;
+            const name = nameEl.textContent.trim();
+            const meta = PACKAGES.find(p => p.name === name);
+            if (!meta) return;
+            const footer = card.querySelector('.package-footer');
+            if (!footer || footer.querySelector('.action-btn')) return;
+            const btn = actionButton(meta.source);
+            btn.addEventListener('click', () => handleAction(btn, meta.source));
+            footer.appendChild(btn);
+        });
+    }
+
+    function copyCommand(btn, cmd) {
+        navigator.clipboard.writeText(cmd).then(() => {
+            const textSpan = btn.querySelector('.cmd-text');
+            const originalText = textSpan.innerText;
+            textSpan.innerText = 'Copied!';
+            btn.classList.add('copied');
+            setTimeout(() => {
+                btn.classList.remove('copied');
+                textSpan.innerText = originalText;
+            }, 2000);
+        });
+    }
+
+    async function main() {
+        initButtons();
+        document.querySelectorAll('.action-btn').forEach(btn => renderButtonState(btn, false, false));
+        if (window.PI_BASE === undefined) {
+            await new Promise(res => window.addEventListener('pi-bridge-ready', res, { once: true }));
+        }
+        if (!window.PI_BASE) {
+            setStatus('offline — start pi-package-manager', 'err');
+            return;
+        }
+        await refreshState();
+        setInterval(refreshState, 8000);
+    }
+
+    document.addEventListener('DOMContentLoaded', main);
+    </script>
+</body>
+</html>

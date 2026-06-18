@@ -1,0 +1,56 @@
+{
+  "name": "pi-package-manager",
+  "version": "0.1.0",
+  "description": "Installed packages manager — web dashboard for browsing, installing, and removing pi packages from your agent. Adds the /packages slash command.",
+  "keywords": [
+    "pi-package",
+    "pi-extension",
+    "package-manager",
+    "dashboard",
+    "pi-coding-agent"
+  ],
+  "license": "MIT",
+  "author": "JVKE",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/znythlabs/pi-package-manager.git"
+  },
+  "homepage": "https://github.com/znythlabs/pi-package-manager#readme",
+  "bugs": {
+    "url": "https://github.com/znythlabs/pi-package-manager/issues"
+  },
+  "type": "module",
+  "files": [
+    "extensions/",
+    "src/",
+    "bin/",
+    "README.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": ">=0.74.0"
+  },
+  "pi": {
+    "extensions": [
+      "./extensions/index.ts"
+    ],
+    "image": "https://raw.githubusercontent.com/znythlabs/pi-package-manager/main/docs/preview.png"
+  },
+  "bin": {
+    "pi-package-manager": "./bin/pi-package-manager.mjs"
+  },
+  "scripts": {
+    "start": "node bin/pi-package-manager.mjs",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.6.0"
+  }
+}
