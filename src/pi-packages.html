@@ -333,6 +333,142 @@
         .status-pill { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--text-sub); }
         .status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--text-sub); display: inline-block; }
 
+        /* --- Paste-a-command preflight box --- */
+        .paste-box {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1.2rem 2rem;
+            border-bottom: 1px solid var(--line);
+            background: linear-gradient(180deg, rgba(173, 255, 47, 0.04), transparent);
+        }
+        .paste-box .label {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--text-sub);
+            white-space: nowrap;
+        }
+        .paste-box input {
+            flex: 1;
+            background: var(--bg-color);
+            border: 1px solid var(--line-bright);
+            color: var(--text-main);
+            padding: 0.55rem 0.85rem;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.78rem;
+            outline: none;
+            transition: border-color 0.18s;
+        }
+        .paste-box input:focus { border-color: var(--brand); }
+        .paste-box button {
+            background: transparent;
+            color: var(--brand);
+            border: 1px solid var(--brand);
+            padding: 0.5rem 0.95rem;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.18s;
+            white-space: nowrap;
+        }
+        .paste-box button:hover:not(:disabled) { background: var(--brand); color: var(--bg-color); }
+        .paste-box button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        /* --- Preflight result panel --- */
+        .preflight-result {
+            display: none;
+            border-bottom: 1px solid var(--line);
+            background: var(--card-bg);
+            padding: 1.6rem 2rem 1.8rem;
+        }
+        .preflight-result.is-shown { display: block; }
+        .preflight-result.is-offline { border-left: 2px solid #FF6B6B; padding-left: calc(2rem - 2px); }
+
+        .pf-header { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; }
+        .pf-source { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.4rem; font-weight: 700; color: var(--brand); }
+        .pf-label {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.6rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            padding: 0.22rem 0.55rem;
+            border: 1px solid currentColor;
+        }
+        .pf-label.label-essential { color: var(--brand); }
+        .pf-label.label-recommended { color: #6BCBFF; }
+        .pf-label.label-good { color: #B5E853; }
+        .pf-label.label-caution { color: #FFD66B; }
+        .pf-label.label-low { color: #FF6B6B; }
+
+        .pf-reasoning { color: var(--text-main); font-size: 0.82rem; line-height: 1.65; margin-bottom: 1.1rem; }
+        .pf-reasoning code, .pf-concerns code { font-family: 'Fira Code', monospace; font-size: 0.95em; color: var(--brand); }
+        .pf-concerns { color: #FFD66B; font-size: 0.72rem; font-family: 'Fira Code', monospace; margin-bottom: 1.2rem; line-height: 1.6; }
+        .pf-concerns ul { padding-left: 1.2rem; margin-top: 0.3rem; }
+        .pf-concerns li { margin-bottom: 0.3rem; }
+        .pf-section-title { font-family: 'Fira Code', monospace; font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text-sub); margin: 1.2rem 0 0.7rem; }
+        .pf-alternatives { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.5rem; margin-bottom: 1.2rem; }
+        .pf-alt { background: var(--bg-color); border: 1px solid var(--line); padding: 0.8rem 1rem; }
+        .pf-alt-name { font-family: 'Fira Code', monospace; font-size: 0.72rem; color: var(--brand); margin-bottom: 0.3rem; }
+        .pf-alt-reason { font-family: 'Fira Code', monospace; font-size: 0.68rem; color: var(--text-sub); line-height: 1.55; }
+        .pf-actions { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+        .pf-btn {
+            background: transparent;
+            border: 1px solid var(--line-bright);
+            color: var(--text-main);
+            padding: 0.5rem 0.95rem;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.18s;
+        }
+        .pf-btn:hover { border-color: var(--brand); color: var(--brand); }
+        .pf-btn.is-primary { border-color: var(--brand); color: var(--brand); }
+        .pf-btn.is-primary:hover { background: var(--brand); color: var(--bg-color); }
+        .pf-btn.is-danger { border-color: #FF6B6B; color: #FF6B6B; }
+        .pf-btn.is-danger:hover { background: #FF6B6B; color: var(--bg-color); }
+
+        /* --- Force-install modal --- */
+        .modal-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.75);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-backdrop.is-shown { display: flex; }
+        .modal {
+            background: var(--card-bg);
+            border: 1px solid var(--line-bright);
+            padding: 2rem;
+            max-width: 520px;
+            width: 92%;
+        }
+        .modal h3 { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.4rem; color: #FF6B6B; margin-bottom: 0.9rem; }
+        .modal p { color: var(--text-main); font-size: 0.8rem; line-height: 1.6; margin-bottom: 0.9rem; }
+        .modal p code, .modal p strong { font-family: 'Fira Code', monospace; color: var(--brand); }
+        .modal p strong { font-weight: 600; }
+        .modal input {
+            width: 100%;
+            background: var(--bg-color);
+            border: 1px solid var(--line-bright);
+            color: var(--text-main);
+            padding: 0.6rem 0.85rem;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            margin: 0.4rem 0 1.1rem;
+            outline: none;
+        }
+        .modal input:focus { border-color: #FF6B6B; }
+        .modal-actions { display: flex; gap: 0.6rem; justify-content: flex-end; }
+
         @media (max-width: 720px) {
             .title-block { grid-template-columns: 1fr; }
             .title-main { border-right: none; border-bottom: 1px solid var(--line); }
@@ -373,6 +509,14 @@
             <span class="rule"></span>
             <span class="count" id="section-count">[ -- INSTALLED ]</span>
         </div>
+
+        <div class="paste-box">
+            <span class="label">Preflight</span>
+            <input type="text" id="paste-input" placeholder="npm:pi-foo or pi install npm:pi-foo" autocomplete="off" spellcheck="false">
+            <button id="paste-run" type="button">Run preflight ▶</button>
+        </div>
+
+        <div class="preflight-result" id="preflight-result"></div>
 
         <div class="package-list" id="packages">
 
@@ -786,5 +930,185 @@
 
     document.addEventListener('DOMContentLoaded', main);
     </script>
+
+    <script>
+    // --- Paste-a-command preflight ------------------------------------------
+    (function () {
+        const pasteInput   = document.getElementById('paste-input');
+        const pasteRun     = document.getElementById('paste-run');
+        const preflightEl  = document.getElementById('preflight-result');
+        const forceModal       = document.getElementById('force-modal');
+        const forceModalSource = document.getElementById('force-modal-source');
+        const forceModalInput  = document.getElementById('force-modal-input');
+        const forceModalCancel = document.getElementById('force-modal-cancel');
+        const forceModalConfirm= document.getElementById('force-modal-confirm');
+
+        let forceModalTarget = null;
+
+        const OFFLINE_REASONS = new Set(['llm_unavailable', 'no_provider', 'no_api_key', 'model_not_found']);
+
+        function parseSource(raw) {
+            const t = (raw || '').trim();
+            if (!t) return null;
+            // Accept "pi install npm:foo", "npm:foo", or "foo"
+            const m = t.match(/(?:^|\s)(npm:@?[a-z0-9][\w./-]*)/i);
+            if (m) return m[1];
+            if (/^@?[a-z0-9][\w./-]*$/i.test(t)) return 'npm:' + t;
+            return null;
+        }
+
+        function escapeHtml(s) {
+            return String(s == null ? '' : s)
+                .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+        }
+
+        async function runPreflight() {
+            const source = parseSource(pasteInput.value);
+            if (!source) { pasteInput.focus(); return; }
+            pasteRun.disabled = true;
+            pasteRun.textContent = 'Running…';
+            preflightEl.classList.add('is-shown');
+            preflightEl.classList.remove('is-offline');
+            preflightEl.innerHTML = '<div class="pf-reasoning">Analyzing <code>' + escapeHtml(source) + '</code> via your configured LLM…</div>';
+            try {
+                const r = await api('/api/preflight', { method: 'POST', body: JSON.stringify({ source }) });
+                if (r && r.ok) renderPreflight(source, r);
+                else renderPreflightError(source, r || {});
+            } catch (e) {
+                renderPreflightError(source, { reason: 'network', error: e.message });
+            } finally {
+                pasteRun.disabled = false;
+                pasteRun.textContent = 'Run preflight ▶';
+            }
+        }
+
+        function renderPreflight(source, r) {
+            preflightEl.classList.remove('is-offline');
+            const labelClass = 'label-' + (r.label || 'good').toLowerCase();
+            let html = '<div class="pf-header">';
+            html += '<span class="pf-source">' + escapeHtml(source) + '</span>';
+            html += '<span class="pf-label ' + labelClass + '">' + escapeHtml(r.label || '—') + '</span>';
+            html += '</div>';
+            if (r.reasoning) html += '<div class="pf-reasoning">' + escapeHtml(r.reasoning) + '</div>';
+            if (Array.isArray(r.concerns) && r.concerns.length) {
+                html += '<div class="pf-concerns"><strong>Concerns:</strong><ul>';
+                for (const c of r.concerns) html += '<li>' + escapeHtml(c) + '</li>';
+                html += '</ul></div>';
+            }
+            if (Array.isArray(r.alternatives) && r.alternatives.length) {
+                html += '<div class="pf-section-title">Better alternatives on pi.dev/packages</div>';
+                html += '<div class="pf-alternatives">';
+                for (const a of r.alternatives) {
+                    html += '<div class="pf-alt">';
+                    html += '<div class="pf-alt-name">' + escapeHtml(a.name || a.source || '') + '</div>';
+                    html += '<div class="pf-alt-reason">' + escapeHtml(a.reason || '') + '</div>';
+                    html += '</div>';
+                }
+                html += '</div>';
+            }
+            html += '<div class="pf-actions">';
+            html += '<button class="pf-btn is-primary" data-pf-action="install">Install ' + escapeHtml(source) + '</button>';
+            html += '<button class="pf-btn" data-pf-action="ignore">Ignore</button>';
+            html += '</div>';
+            preflightEl.innerHTML = html;
+            preflightEl.querySelector('[data-pf-action="install"]').addEventListener('click', () => doInstall(source));
+            preflightEl.querySelector('[data-pf-action="ignore"]').addEventListener('click', () => preflightEl.classList.remove('is-shown'));
+        }
+
+        function renderPreflightError(source, r) {
+            const offline = OFFLINE_REASONS.has(r.reason);
+            preflightEl.classList.toggle('is-offline', offline);
+            let html = '<div class="pf-header">';
+            html += '<span class="pf-source">' + escapeHtml(source) + '</span>';
+            html += '<span class="pf-label label-low">' + escapeHtml(offline ? 'No analysis' : 'Error') + '</span>';
+            html += '</div>';
+            html += '<div class="pf-reasoning">';
+            if (offline) {
+                html += 'Your LLM is not available for preflight analysis. Reason: <code>' + escapeHtml(r.reason || 'unknown') + '</code>.';
+                if (r.error) html += '<br><br><small>' + escapeHtml(r.error) + '</small>';
+                html += '<br><br>Installing without analysis means conflicts with your existing extensions will not be flagged, security advisories may not be surfaced, and better alternatives will not be suggested.';
+            } else {
+                html += escapeHtml(r.error || r.reason || 'Unknown error');
+            }
+            html += '</div>';
+            html += '<div class="pf-actions">';
+            html += '<button class="pf-btn is-danger" data-pf-action="force">Force install…</button>';
+            html += '<button class="pf-btn" data-pf-action="ignore">Ignore</button>';
+            html += '</div>';
+            preflightEl.innerHTML = html;
+            preflightEl.querySelector('[data-pf-action="force"]').addEventListener('click', () => openForceModal(source));
+            preflightEl.querySelector('[data-pf-action="ignore"]').addEventListener('click', () => preflightEl.classList.remove('is-shown'));
+        }
+
+        async function doInstall(source) {
+            try {
+                const r = await api('/api/install', { method: 'POST', body: JSON.stringify({ source }) });
+                applyState(r.sources);
+                setStatus(source + ': installed ✓', 'ok');
+                preflightEl.classList.remove('is-shown');
+                await refreshState();
+            } catch (e) {
+                setStatus(source + ' failed: ' + e.message, 'err');
+            }
+        }
+
+        function openForceModal(source) {
+            forceModalTarget = source;
+            forceModalSource.textContent = source;
+            forceModalInput.value = '';
+            forceModalConfirm.disabled = true;
+            forceModal.classList.add('is-shown');
+            setTimeout(() => forceModalInput.focus(), 50);
+        }
+
+        function closeForceModal() {
+            forceModal.classList.remove('is-shown');
+            forceModalTarget = null;
+        }
+
+        async function confirmForceInstall() {
+            const source = forceModalTarget;
+            const phrase = forceModalInput.value;
+            closeForceModal();
+            if (!source) return;
+            try {
+                const r = await api('/api/force-install', { method: 'POST', body: JSON.stringify({ source, phrase }) });
+                applyState(r.sources);
+                setStatus(source + ': force-installed ✓ (audit-logged)', 'warn');
+                preflightEl.classList.remove('is-shown');
+                await refreshState();
+            } catch (e) {
+                setStatus('force-install ' + source + ' failed: ' + e.message, 'err');
+            }
+        }
+
+        if (pasteRun) {
+            pasteRun.addEventListener('click', runPreflight);
+            pasteInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') runPreflight(); });
+            forceModalCancel.addEventListener('click', closeForceModal);
+            forceModalConfirm.addEventListener('click', confirmForceInstall);
+            forceModalInput.addEventListener('input', () => {
+                forceModalConfirm.disabled = forceModalInput.value !== 'I understand the risks';
+            });
+            forceModalInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && !forceModalConfirm.disabled) confirmForceInstall();
+            });
+        }
+    })();
+    </script>
+    <div class="modal-backdrop" id="force-modal">
+        <div class="modal">
+            <h3>⚠ Force install</h3>
+            <p>You are about to install <strong id="force-modal-source"></strong> <strong>without preflight safety checks</strong>. This will not assess compatibility with your stack, surface conflicts, or suggest better alternatives.</p>
+            <p>Type <code>I understand the risks</code> below to confirm:</p>
+            <input type="text" id="force-modal-input" autocomplete="off" spellcheck="false" placeholder="I understand the risks">
+            <div class="modal-actions">
+                <button class="pf-btn" id="force-modal-cancel" type="button">Cancel</button>
+                <button class="pf-btn is-danger" id="force-modal-confirm" type="button" disabled>Force install</button>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>

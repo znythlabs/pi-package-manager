@@ -1,6 +1,6 @@
 {
   "name": "pi-package-manager",
-  "version": "0.1.8",
+  "version": "0.2.0",
   "description": "Installed packages manager — web dashboard for browsing, installing, and removing pi packages from your agent. Adds the /packages slash command.",
   "keywords": [
     "pi-package",
@@ -36,6 +36,9 @@
   "peerDependencies": {
     "@earendil-works/pi-coding-agent": ">=0.74.0"
   },
+  "dependencies": {
+    "@earendil-works/pi-ai": ">=0.74.0"
+  },
   "pi": {
     "extensions": [
       "./extensions/index.ts"
@@ -47,7 +50,8 @@
   },
   "scripts": {
     "start": "node bin/pi-package-manager.mjs",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "node --test test/test-shim.mjs"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
