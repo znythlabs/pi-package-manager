@@ -6,6 +6,20 @@ Installed packages manager for [pi](https://pi.dev) — a blueprint-style web da
 ![License](https://img.shields.io/badge/license-MIT-blue)
 ![pi-extension](https://img.shields.io/badge/pi-extension-ADFF2F)
 
+## Preview
+
+The dashboard lists every installed package and lets you install, uninstall, or copy the install command with one click.
+
+![Dashboard overview](docs/preview.png)
+
+When a package isn't on the machine yet, the action button flips to a neutral **Install** state; when it is, it switches to a brand-green **Uninstall** state. You can mix the two in the same view.
+
+![Mixed install / uninstall states](docs/states.png)
+
+The blueprint layout collapses gracefully on narrow viewports — the meta rail folds into a row, package cards stack, and the action buttons stretch full-width.
+
+![Mobile view](docs/mobile.png)
+
 ## What it does
 
 Adds two slash commands to your pi agent:
