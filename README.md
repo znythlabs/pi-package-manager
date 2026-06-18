@@ -8,17 +8,12 @@ Installed packages manager for [pi](https://pi.dev) — a blueprint-style web da
 
 ## Preview
 
-The dashboard lists every installed package and lets you install, uninstall, or copy the install command with one click.
+The dashboard lists every installed package and lets you install, uninstall, or copy the install command with one click. When a package isn't on the machine yet, the action button flips to a neutral **Install** state; when it is, it switches to a brand-green **Uninstall** state — and you can mix the two in the same view.
 
-![Dashboard overview](docs/preview.png)
-
-When a package isn't on the machine yet, the action button flips to a neutral **Install** state; when it is, it switches to a brand-green **Uninstall** state. You can mix the two in the same view.
-
-![Mixed install / uninstall states](docs/states.png)
-
-The blueprint layout collapses gracefully on narrow viewports — the meta rail folds into a row, package cards stack, and the action buttons stretch full-width.
-
-![Mobile view](docs/mobile.png)
+<p align="center">
+  <img src="docs/preview.png" width="48%" alt="Dashboard overview" />
+  <img src="docs/states.png" width="48%" alt="Mixed install and uninstall states" />
+</p>
 
 ## What it does
 
