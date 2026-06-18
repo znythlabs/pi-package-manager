@@ -10,10 +10,9 @@ Installed packages manager for [pi](https://pi.dev) — a blueprint-style web da
 
 The dashboard lists every installed package and lets you install, uninstall, or copy the install command with one click. When a package isn't on the machine yet, the action button flips to a neutral **Install** state; when it is, it switches to a brand-green **Uninstall** state — and you can mix the two in the same view.
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/znythlabs/pi-package-manager/main/docs/preview.png" width="48%" alt="Dashboard overview" />
-  <img src="https://raw.githubusercontent.com/znythlabs/pi-package-manager/main/docs/states.png" width="48%" alt="Mixed install and uninstall states" />
-</p>
+| Dashboard overview | Install / Uninstall states |
+|---|---|
+| ![Dashboard overview](https://raw.githubusercontent.com/znythlabs/pi-package-manager/main/docs/preview.png) | ![Mixed states](https://raw.githubusercontent.com/znythlabs/pi-package-manager/main/docs/states.png) |
 
 ## What it does
 
