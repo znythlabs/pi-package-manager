@@ -24,6 +24,27 @@ Adds two slash commands to your pi agent:
 
 The dashboard is a self-contained HTML page that lists your installed extensions and lets you install or remove any npm-published pi package directly from the browser. No terminal round-trips, no copy-paste.
 
+### Prebuilt package setup
+
+The dashboard ships with **12 proven pi packages** already listed. Fresh pi agent users don't need to search for good extensions — they're all one click away:
+
+| Package | What it does |
+|---------|-------------|
+| `pi-lean-ctx` | Token-saves bash/read/grep/find/ls via lean-ctx compression |
+| `pi-btw` | Parallel side conversations with `/btw` |
+| `pi-intercom` | 1:1 messaging between pi sessions on the same machine |
+| `pi-goal` | Persistent autonomous goals via `/goal` |
+| `pi-web-access` | Web search, URL fetch, GitHub clone, YouTube understanding |
+| `pi-hermes-memory` | Persistent memory + session search + procedural skills |
+| `pi-subagents` | Delegate tasks to subagents with chains and parallel execution |
+| `@gonrocca/zero-pi` | Spec-driven development workflow (explore → plan → build) |
+| `pi-mcp-adapter` | MCP (Model Context Protocol) adapter |
+| `pi-paster` | Paste image paths as first-class attachments |
+| `pi-markdown-preview` | Markdown/LaTeX preview → PDF, HTML, or PNG |
+| `@llblab/pi-telegram` | Telegram DM as a session-local operator console |
+
+If you already have a package installed, the button shows **Uninstall** instead of **Install** — so you can see at a glance which of the recommended extensions you're still missing.
+
 ## Install
 
 ```bash
