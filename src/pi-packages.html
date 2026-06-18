@@ -931,6 +931,19 @@
     document.addEventListener('DOMContentLoaded', main);
     </script>
 
+    <div class="modal-backdrop" id="force-modal">
+        <div class="modal">
+            <h3>⚠ Force install</h3>
+            <p>You are about to install <strong id="force-modal-source"></strong> <strong>without preflight safety checks</strong>. This will not assess compatibility with your stack, surface conflicts, or suggest better alternatives.</p>
+            <p>Type <code>I understand the risks</code> below to confirm:</p>
+            <input type="text" id="force-modal-input" autocomplete="off" spellcheck="false" placeholder="I understand the risks">
+            <div class="modal-actions">
+                <button class="pf-btn" id="force-modal-cancel" type="button">Cancel</button>
+                <button class="pf-btn is-danger" id="force-modal-confirm" type="button" disabled>Force install</button>
+            </div>
+        </div>
+    </div>
+
     <script>
     // --- Paste-a-command preflight ------------------------------------------
     (function () {
@@ -1097,18 +1110,6 @@
         }
     })();
     </script>
-    <div class="modal-backdrop" id="force-modal">
-        <div class="modal">
-            <h3>⚠ Force install</h3>
-            <p>You are about to install <strong id="force-modal-source"></strong> <strong>without preflight safety checks</strong>. This will not assess compatibility with your stack, surface conflicts, or suggest better alternatives.</p>
-            <p>Type <code>I understand the risks</code> below to confirm:</p>
-            <input type="text" id="force-modal-input" autocomplete="off" spellcheck="false" placeholder="I understand the risks">
-            <div class="modal-actions">
-                <button class="pf-btn" id="force-modal-cancel" type="button">Cancel</button>
-                <button class="pf-btn is-danger" id="force-modal-confirm" type="button" disabled>Force install</button>
-            </div>
-        </div>
-    </div>
 
 </body>
 </html>
