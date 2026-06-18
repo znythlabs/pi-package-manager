@@ -19,6 +19,7 @@ import { readFileSync } from "node:fs";
 import { homedir } from "node:os";
 import { join } from "node:path";
 import { complete, getEnvApiKey, getModel } from "@earendil-works/pi-ai";
+import { buildResult, parseArgs, parseLlmResponse } from "./pi-preflight-lib.mjs";
 
 const args = parseArgs(process.argv.slice(2));
 if (!args.facts || !args.source) {
@@ -140,62 +141,15 @@ const text = (result.content || [])
 
 if (!text) die("llm_empty", "LLM returned no text content");
 
-// Strip markdown code fences if the model wrapped the JSON
-const cleaned = text
-    .replace(/^```(?:json)?\s*/i, "")
-    .replace(/```\s*$/, "")
-    .trim();
-
-let parsed;
-try {
-    parsed = JSON.parse(cleaned);
-} catch (e) {
-    // Don't fail the whole preflight just because the model wrapped its answer.
-    // Return the raw text so the dashboard can show it as a "raw reasoning" fallback.
-    console.log(JSON.stringify({
-        ok: true,
-        label: null,
-        reasoning: cleaned,
-        alternatives: [],
-        concerns: ["Model returned non-JSON; showing raw response."],
-        raw: true,
-        model: modelId,
-        provider,
-    }));
-    process.exit(0);
-}
-
-// Normalize: ensure label is from the allowed set; coerce others to "Good" rather than failing.
-const allowedLabels = new Set(["Essential", "Recommended", "Good", "Caution", "Low"]);
-const label = allowedLabels.has(parsed.label) ? parsed.label : "Good";
-const alternatives = Array.isArray(parsed.alternatives) ? parsed.alternatives.slice(0, 3).map((a) => ({
-    name: String(a?.name || ""),
-    source: String(a?.source || `npm:${a?.name || ""}`),
-    reason: String(a?.reason || ""),
-})) : [];
-const concerns = Array.isArray(parsed.concerns) ? parsed.concerns.map(String) : [];
-
-console.log(JSON.stringify({
-    ok: true,
-    label,
-    reasoning: String(parsed.reasoning || ""),
-    alternatives,
-    concerns,
+const { parsed, raw } = parseLlmResponse(text);
+const out = buildResult({
     model: modelId,
     provider,
-}));
-
-function parseArgs(argv) {
-    const out = {};
-    for (let i = 0; i < argv.length; i++) {
-        const a = argv[i];
-        if (a.startsWith("--")) {
-            out[a.slice(2)] = argv[i + 1];
-            i++;
-        }
-    }
-    return out;
-}
+    parsed,
+    raw,
+    parseFailed: !parsed,
+});
+console.log(JSON.stringify(out));
 
 function readJson(path, fallback) {
     try {

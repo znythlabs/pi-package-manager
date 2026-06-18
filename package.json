@@ -50,7 +50,8 @@
   },
   "scripts": {
     "start": "node bin/pi-package-manager.mjs",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "node --test test/test-shim.mjs"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
