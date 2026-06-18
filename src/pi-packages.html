@@ -301,6 +301,18 @@
         }
         .source-link:hover { color: var(--brand); }
 
+        /* header link — small icon sitting right of the package name */
+        .header-link {
+            color: var(--text-sub);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            flex-shrink: 0;
+            transition: color 0.2s;
+        }
+        .header-link .icon { width: 11px; height: 11px; }
+        .header-link:hover { color: var(--brand); }
+
         .icon { width: 12px; height: 12px; fill: currentColor; flex-shrink: 0; }
 
         .frame-footer {
@@ -368,6 +380,9 @@
                 <div class="card-index"><span class="num">01</span><span class="plus">+</span></div>
                 <div class="package-header">
                     <a href="https://pi.dev/packages/pi-lean-ctx" target="_blank" class="package-name">pi-lean-ctx</a>
+
+                    <a href="https://pi.dev/packages/pi-lean-ctx" target="_blank" class="header-link" title="View on Pi.dev"><svg class="icon" viewBox="0 0 24 24"><path d="M19 19H5V5H10V3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V14H19V19ZM14 3V5H17.59L7.76 14.83L9.17 16.24L19 6.41V10H21V3H14Z"/></svg></a>
+
                 </div>
                 <div class="package-desc">Routes bash/read/grep/find/ls through lean-ctx for strong token savings. Embedded MCP bridge adds a persistent session cache so unchanged re-reads cost ~13 tokens.</div>
                 <div class="package-footer">
@@ -375,7 +390,6 @@
                         <svg class="icon" viewBox="0 0 24 24"><path d="M16 1H4C2.9 1 2 1.9 2 3V17H4V3H16V1ZM19 5H8C6.9 5 6 5.9 6 7V21C6 22.1 6.9 23 8 23H19C20.1 23 21 22.1 21 21V7C21 5.9 20.1 5 19 5ZM19 21H8V7H19V21Z"/></svg>
                         <span class="cmd-text">pi install npm:pi-lean-ctx</span>
                     </button>
-                    <a href="https://pi.dev/packages/pi-lean-ctx" target="_blank" class="source-link">View on Pi.dev<svg class="icon" viewBox="0 0 24 24"><path d="M19 19H5V5H10V3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V14H19V19ZM14 3V5H17.59L7.76 14.83L9.17 16.24L19 6.41V10H21V3H14Z"/></svg></a>
                 </div>
             </div>
 
@@ -383,6 +397,9 @@
                 <div class="card-index"><span class="num">02</span><span class="plus">+</span></div>
                 <div class="package-header">
                     <a href="https://pi.dev/packages/pi-btw" target="_blank" class="package-name">pi-btw</a>
+
+                    <a href="https://pi.dev/packages/pi-btw" target="_blank" class="header-link" title="View on Pi.dev"><svg class="icon" viewBox="0 0 24 24"><path d="M19 19H5V5H10V3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V14H19V19ZM14 3V5H17.59L7.76 14.83L9.17 16.24L19 6.41V10H21V3H14Z"/></svg></a>
+
                 </div>
                 <div class="package-desc">A pi extension for parallel side conversations with /btw.</div>
                 <div class="package-footer">
@@ -390,7 +407,6 @@
                         <svg class="icon" viewBox="0 0 24 24"><path d="M16 1H4C2.9 1 2 1.9 2 3V17H4V3H16V1ZM19 5H8C6.9 5 6 5.9 6 7V21C6 22.1 6.9 23 8 23H19C20.1 23 21 22.1 21 21V7C21 5.9 20.1 5 19 5ZM19 21H8V7H19V21Z"/></svg>
                         <span class="cmd-text">pi install npm:pi-btw</span>
                     </button>
-                    <a href="https://pi.dev/packages/pi-btw" target="_blank" class="source-link">View on Pi.dev<svg class="icon" viewBox="0 0 24 24"><path d="M19 19H5V5H10V3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V14H19V19ZM14 3V5H17.59L7.76 14.83L9.17 16.24L19 6.41V10H21V3H14Z"/></svg></a>
                 </div>
             </div>
 
@@ -398,6 +414,9 @@
                 <div class="card-index"><span class="num">03</span><span class="plus">+</span></div>
                 <div class="package-header">
                     <a href="https://pi.dev/packages/pi-intercom" target="_blank" class="package-name">pi-intercom</a>
+
+                    <a href="https://pi.dev/packages/pi-intercom" target="_blank" class="header-link" title="View on Pi.dev"><svg class="icon" viewBox="0 0 24 24"><path d="M19 19H5V5H10V3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V14H19V19ZM14 3V5H17.59L7.76 14.83L9.17 16.24L19 6.41V10H21V3H14Z"/></svg></a>
+
                 </div>
                 <div class="package-desc">Direct 1:1 messaging between pi sessions on the same machine. Send context, findings, or requests from one session to another.</div>
                 <div class="package-footer">
@@ -405,7 +424,6 @@
                         <svg class="icon" viewBox="0 0 24 24"><path d="M16 1H4C2.9 1 2 1.9 2 3V17H4V3H16V1ZM19 5H8C6.9 5 6 5.9 6 7V21C6 22.1 6.9 23 8 23H19C20.1 23 21 22.1 21 21V7C21 5.9 20.1 5 19 5ZM19 21H8V7H19V21Z"/></svg>
                         <span class="cmd-text">pi install npm:pi-intercom</span>
                     </button>
-                    <a href="https://pi.dev/packages/pi-intercom" target="_blank" class="source-link">View on Pi.dev<svg class="icon" viewBox="0 0 24 24"><path d="M19 19H5V5H10V3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V14H19V19ZM14 3V5H17.59L7.76 14.83L9.17 16.24L19 6.41V10H21V3H14Z"/></svg></a>
                 </div>
             </div>
 
@@ -413,6 +431,9 @@
                 <div class="card-index"><span class="num">04</span><span class="plus">+</span></div>
                 <div class="package-header">
                     <a href="https://pi.dev/packages/pi-goal" target="_blank" class="package-name">pi-goal</a>
+
+                    <a href="https://pi.dev/packages/pi-goal" target="_blank" class="header-link" title="View on Pi.dev"><svg class="icon" viewBox="0 0 24 24"><path d="M19 19H5V5H10V3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V14H19V19ZM14 3V5H17.59L7.76 14.83L9.17 16.24L19 6.41V10H21V3H14Z"/></svg></a>
+
                 </div>
                 <div class="package-desc">Persistent autonomous goals for pi — /goal loops until complete, paused, or budget-limited.</div>
                 <div class="package-footer">
@@ -420,7 +441,6 @@
                         <svg class="icon" viewBox="0 0 24 24"><path d="M16 1H4C2.9 1 2 1.9 2 3V17H4V3H16V1ZM19 5H8C6.9 5 6 5.9 6 7V21C6 22.1 6.9 23 8 23H19C20.1 23 21 22.1 21 21V7C21 5.9 20.1 5 19 5ZM19 21H8V7H19V21Z"/></svg>
                         <span class="cmd-text">pi install npm:pi-goal</span>
                     </button>
-                    <a href="https://pi.dev/packages/pi-goal" target="_blank" class="source-link">View on Pi.dev<svg class="icon" viewBox="0 0 24 24"><path d="M19 19H5V5H10V3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V14H19V19ZM14 3V5H17.59L7.76 14.83L9.17 16.24L19 6.41V10H21V3H14Z"/></svg></a>
                 </div>
             </div>
 
@@ -428,6 +448,9 @@
                 <div class="card-index"><span class="num">05</span><span class="plus">+</span></div>
                 <div class="package-header">
                     <a href="https://pi.dev/packages/pi-web-access" target="_blank" class="package-name">pi-web-access</a>
+
+                    <a href="https://pi.dev/packages/pi-web-access" target="_blank" class="header-link" title="View on Pi.dev"><svg class="icon" viewBox="0 0 24 24"><path d="M19 19H5V5H10V3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V14H19V19ZM14 3V5H17.59L7.76 14.83L9.17 16.24L19 6.41V10H21V3H14Z"/></svg></a>
+
                 </div>
                 <div class="package-desc">Web search, URL fetching, GitHub repo cloning, PDF extraction, YouTube video understanding, and local video analysis for Pi.</div>
                 <div class="package-footer">
@@ -435,7 +458,6 @@
                         <svg class="icon" viewBox="0 0 24 24"><path d="M16 1H4C2.9 1 2 1.9 2 3V17H4V3H16V1ZM19 5H8C6.9 5 6 5.9 6 7V21C6 22.1 6.9 23 8 23H19C20.1 23 21 22.1 21 21V7C21 5.9 20.1 5 19 5ZM19 21H8V7H19V21Z"/></svg>
                         <span class="cmd-text">pi install npm:pi-web-access</span>
                     </button>
-                    <a href="https://pi.dev/packages/pi-web-access" target="_blank" class="source-link">View on Pi.dev<svg class="icon" viewBox="0 0 24 24"><path d="M19 19H5V5H10V3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V14H19V19ZM14 3V5H17.59L7.76 14.83L9.17 16.24L19 6.41V10H21V3H14Z"/></svg></a>
                 </div>
             </div>
 
@@ -443,6 +465,9 @@
                 <div class="card-index"><span class="num">06</span><span class="plus">+</span></div>
                 <div class="package-header">
                     <a href="https://pi.dev/packages/pi-hermes-memory" target="_blank" class="package-name">pi-hermes-memory</a>
+
+                    <a href="https://pi.dev/packages/pi-hermes-memory" target="_blank" class="header-link" title="View on Pi.dev"><svg class="icon" viewBox="0 0 24 24"><path d="M19 19H5V5H10V3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V14H19V19ZM14 3V5H17.59L7.76 14.83L9.17 16.24L19 6.41V10H21V3H14Z"/></svg></a>
+
                 </div>
                 <div class="package-desc">Persistent memory + session search + secret scanning for Pi. Token-aware policy-only memory, SQLite FTS5 search, auto-consolidation, procedural skills.</div>
                 <div class="package-footer">
@@ -450,7 +475,6 @@
                         <svg class="icon" viewBox="0 0 24 24"><path d="M16 1H4C2.9 1 2 1.9 2 3V17H4V3H16V1ZM19 5H8C6.9 5 6 5.9 6 7V21C6 22.1 6.9 23 8 23H19C20.1 23 21 20.1 21 19V7C21 5.9 20.1 5 19 5ZM19 21H8V7H19V21Z"/></svg>
                         <span class="cmd-text">pi install npm:pi-hermes-memory</span>
                     </button>
-                    <a href="https://pi.dev/packages/pi-hermes-memory" target="_blank" class="source-link">View on Pi.dev<svg class="icon" viewBox="0 0 24 24"><path d="M19 19H5V5H10V3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V14H19V19ZM14 3V5H17.59L7.76 14.83L9.17 16.24L19 6.41V10H21V3H14Z"/></svg></a>
                 </div>
             </div>
 
@@ -458,6 +482,9 @@
                 <div class="card-index"><span class="num">07</span><span class="plus">+</span></div>
                 <div class="package-header">
                     <a href="https://pi.dev/packages/pi-subagents" target="_blank" class="package-name">pi-subagents</a>
+
+                    <a href="https://pi.dev/packages/pi-subagents" target="_blank" class="header-link" title="View on Pi.dev"><svg class="icon" viewBox="0 0 24 24"><path d="M19 19H5V5H10V3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V14H19V19ZM14 3V5H17.59L7.76 14.83L9.17 16.24L19 6.41V10H21V3H14Z"/></svg></a>
+
                 </div>
                 <div class="package-desc">Pi extension for delegating tasks to subagents with chains, parallel execution, and TUI clarification.</div>
                 <div class="package-footer">
@@ -465,7 +492,6 @@
                         <svg class="icon" viewBox="0 0 24 24"><path d="M16 1H4C2.9 1 2 1.9 2 3V17H4V3H16V1ZM19 5H8C6.9 5 6 5.9 6 7V21C6 22.1 6.9 23 8 23H19C20.1 23 21 20.1 21 19V7C21 5.9 20.1 5 19 5ZM19 21H8V7H19V21Z"/></svg>
                         <span class="cmd-text">pi install npm:pi-subagents</span>
                     </button>
-                    <a href="https://pi.dev/packages/pi-subagents" target="_blank" class="source-link">View on Pi.dev<svg class="icon" viewBox="0 0 24 24"><path d="M19 19H5V5H10V3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V14H19V19ZM14 3V5H17.59L7.76 14.83L9.17 16.24L19 6.41V10H21V3H14Z"/></svg></a>
                 </div>
             </div>
 
@@ -473,6 +499,9 @@
                 <div class="card-index"><span class="num">08</span><span class="plus">+</span></div>
                 <div class="package-header">
                     <a href="https://pi.dev/packages/@gonrocca/zero-pi" target="_blank" class="package-name">@gonrocca/zero-pi</a>
+
+                    <a href="https://pi.dev/packages/@gonrocca/zero-pi" target="_blank" class="header-link" title="View on Pi.dev"><svg class="icon" viewBox="0 0 24 24"><path d="M19 19H5V5H10V3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V14H19V19ZM14 3V5H17.59L7.76 14.83L9.17 16.24L19 6.41V10H21V3H14Z"/></svg></a>
+
                 </div>
                 <div class="package-desc">zero spec-driven development workflow (explore → plan → build → veredicto) with per-phase model autotune and token-efficient batched builds.</div>
                 <div class="package-footer">
@@ -480,7 +509,6 @@
                         <svg class="icon" viewBox="0 0 24 24"><path d="M16 1H4C2.9 1 2 1.9 2 3V17H4V3H16V1ZM19 5H8C6.9 5 6 5.9 6 7V21C6 22.1 6.9 23 8 23H19C20.1 23 21 20.1 21 19V7C21 5.9 20.1 5 19 5ZM19 21H8V7H19V21Z"/></svg>
                         <span class="cmd-text">pi install npm:@gonrocca/zero-pi</span>
                     </button>
-                    <a href="https://pi.dev/packages/@gonrocca/zero-pi" target="_blank" class="source-link">View on Pi.dev<svg class="icon" viewBox="0 0 24 24"><path d="M19 19H5V5H10V3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V14H19V19ZM14 3V5H17.59L7.76 14.83L9.17 16.24L19 6.41V10H21V3H14Z"/></svg></a>
                 </div>
             </div>
 
@@ -488,6 +516,9 @@
                 <div class="card-index"><span class="num">09</span><span class="plus">+</span></div>
                 <div class="package-header">
                     <a href="https://pi.dev/packages/pi-mcp-adapter" target="_blank" class="package-name">pi-mcp-adapter</a>
+
+                    <a href="https://pi.dev/packages/pi-mcp-adapter" target="_blank" class="header-link" title="View on Pi.dev"><svg class="icon" viewBox="0 0 24 24"><path d="M19 19H5V5H10V3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V14H19V19ZM14 3V5H17.59L7.76 14.83L9.17 16.24L19 6.41V10H21V3H14Z"/></svg></a>
+
                 </div>
                 <div class="package-desc">MCP (Model Context Protocol) adapter extension for Pi coding agent.</div>
                 <div class="package-footer">
@@ -495,7 +526,6 @@
                         <svg class="icon" viewBox="0 0 24 24"><path d="M16 1H4C2.9 1 2 1.9 2 3V17H4V3H16V1ZM19 5H8C6.9 5 6 5.9 6 7V21C6 22.1 6.9 23 8 23H19C20.1 23 21 20.1 21 19V7C21 5.9 20.1 5 19 5ZM19 21H8V7H19V21Z"/></svg>
                         <span class="cmd-text">pi install npm:pi-mcp-adapter</span>
                     </button>
-                    <a href="https://pi.dev/packages/pi-mcp-adapter" target="_blank" class="source-link">View on Pi.dev<svg class="icon" viewBox="0 0 24 24"><path d="M19 19H5V5H10V3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V14H19V19ZM14 3V5H17.59L7.76 14.83L9.17 16.24L19 6.41V10H21V3H14Z"/></svg></a>
                 </div>
             </div>
 
@@ -503,6 +533,9 @@
                 <div class="card-index"><span class="num">10</span><span class="plus">+</span></div>
                 <div class="package-header">
                     <a href="https://pi.dev/packages/pi-paster" target="_blank" class="package-name">pi-paster</a>
+
+                    <a href="https://pi.dev/packages/pi-paster" target="_blank" class="header-link" title="View on Pi.dev"><svg class="icon" viewBox="0 0 24 24"><path d="M19 19H5V5H10V3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V14H19V19ZM14 3V5H17.59L7.76 14.83L9.17 16.24L19 6.41V10H21V3H14Z"/></svg></a>
+
                 </div>
                 <div class="package-desc">Pi extension that turns pasted image paths into first-class image attachments.</div>
                 <div class="package-footer">
@@ -510,7 +543,6 @@
                         <svg class="icon" viewBox="0 0 24 24"><path d="M16 1H4C2.9 1 2 1.9 2 3V17H4V3H16V1ZM19 5H8C6.9 5 6 5.9 6 7V21C6 22.1 6.9 23 8 23H19C20.1 23 21 20.1 21 19V7C21 5.9 20.1 5 19 5ZM19 21H8V7H19V21Z"/></svg>
                         <span class="cmd-text">pi install npm:pi-paster</span>
                     </button>
-                    <a href="https://pi.dev/packages/pi-paster" target="_blank" class="source-link">View on Pi.dev<svg class="icon" viewBox="0 0 24 24"><path d="M19 19H5V5H10V3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V14H19V19ZM14 3V5H17.59L7.76 14.83L9.17 16.24L19 6.41V10H21V3H14Z"/></svg></a>
                 </div>
             </div>
 
@@ -518,6 +550,9 @@
                 <div class="card-index"><span class="num">11</span><span class="plus">+</span></div>
                 <div class="package-header">
                     <a href="https://pi.dev/packages/pi-markdown-preview" target="_blank" class="package-name">pi-markdown-preview</a>
+
+                    <a href="https://pi.dev/packages/pi-markdown-preview" target="_blank" class="header-link" title="View on Pi.dev"><svg class="icon" viewBox="0 0 24 24"><path d="M19 19H5V5H10V3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V14H19V19ZM14 3V5H17.59L7.76 14.83L9.17 16.24L19 6.41V10H21V3H14Z"/></svg></a>
+
                 </div>
                 <div class="package-desc">Markdown and LaTeX preview rendering for pi — export to PDF, HTML, or PNG.</div>
                 <div class="package-footer">
@@ -525,7 +560,6 @@
                         <svg class="icon" viewBox="0 0 24 24"><path d="M16 1H4C2.9 1 2 1.9 2 3V17H4V3H16V1ZM19 5H8C6.9 5 6 5.9 6 7V21C6 22.1 6.9 23 8 23H19C20.1 23 21 20.1 21 19V7C21 5.9 20.1 5 19 5ZM19 21H8V7H19V21Z"/></svg>
                         <span class="cmd-text">pi install npm:pi-markdown-preview</span>
                     </button>
-                    <a href="https://pi.dev/packages/pi-markdown-preview" target="_blank" class="source-link">View on Pi.dev<svg class="icon" viewBox="0 0 24 24"><path d="M19 19H5V5H10V3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V14H19V19ZM14 3V5H17.59L7.76 14.83L9.17 16.24L19 6.41V10H21V3H14Z"/></svg></a>
                 </div>
             </div>
 
@@ -533,6 +567,9 @@
                 <div class="card-index"><span class="num">12</span><span class="plus">+</span></div>
                 <div class="package-header">
                     <a href="https://pi.dev/packages/@llblab/pi-telegram" target="_blank" class="package-name">@llblab/pi-telegram</a>
+
+                    <a href="https://pi.dev/packages/@llblab/pi-telegram" target="_blank" class="header-link" title="View on Pi.dev"><svg class="icon" viewBox="0 0 24 24"><path d="M19 19H5V5H10V3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V14H19V19ZM14 3V5H17.59L7.76 14.83L9.17 16.24L19 6.41V10H21V3H14Z"/></svg></a>
+
                 </div>
                 <div class="package-desc">Telegram runtime adapter for pi — turns a private Telegram DM into a session-local operator console.</div>
                 <div class="package-footer">
@@ -540,7 +577,6 @@
                         <svg class="icon" viewBox="0 0 24 24"><path d="M16 1H4C2.9 1 2 1.9 2 3V17H4V3H16V1ZM19 5H8C6.9 5 6 5.9 6 7V21C6 22.1 6.9 23 8 23H19C20.1 23 21 20.1 21 19V7C21 5.9 20.1 5 19 5ZM19 21H8V7H19V21Z"/></svg>
                         <span class="cmd-text">pi install npm:@llblab/pi-telegram</span>
                     </button>
-                    <a href="https://pi.dev/packages/@llblab/pi-telegram" target="_blank" class="source-link">View on Pi.dev<svg class="icon" viewBox="0 0 24 24"><path d="M19 19H5V5H10V3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V14H19V19ZM14 3V5H17.59L7.76 14.83L9.17 16.24L19 6.41V10H21V3H14Z"/></svg></a>
                 </div>
             </div>
 
