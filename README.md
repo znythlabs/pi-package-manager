@@ -104,44 +104,6 @@ pi-package-manager/
 └── README.md
 ```
 
-## Development
-
-```bash
-git clone https://github.com/jvke/pi-package-manager
-cd pi-package-manager
-npm install
-npm run typecheck    # typecheck extensions/index.ts
-npm start            # run the CLI
-```
-
-### Testing locally with your agent
-
-From `C:\Users\JVKE\.pi\agent\npm` (the `pi-extensions` workspace), install the local copy:
-
-```bash
-npm install file:../pi-package-manager
-npx pi list          # should include "npm:pi-package-manager"
-```
-
-Restart the agent — `/packages` is now available.
-
-### Updating the bundled catalog before publishing
-
-The dashboard HTML is static. To refresh it with your currently-installed packages, run the regen script — it updates both your personal copy and the bundled one:
-
-```bash
-python "C:\Users\JVKE\.pi\agent\update_pi_packages.py"
-```
-
-## Publishing
-
-```bash
-npm login
-npm publish --access public
-```
-
-The package will appear on <https://pi.dev/packages> shortly after.
-
 ## License
 
 MIT
