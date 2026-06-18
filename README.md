@@ -10,9 +10,11 @@ Installed packages manager for [pi](https://pi.dev) — a blueprint-style web da
 
 The dashboard lists every installed package and lets you install, uninstall, or copy the install command with one click. When a package isn't on the machine yet, the action button flips to a neutral **Install** state; when it is, it switches to a brand-green **Uninstall** state — and you can mix the two in the same view.
 
-| Dashboard overview | Install / Uninstall states |
+The preflight paste box above the grid calls your configured pi LLM to assess any package before you install it. Fit label, reasoning, concerns, and up to 3 better alternatives — all without leaving the dashboard.
+
+| Dashboard (13 installed + manager card) | LLM preflight result |
 |---|---|
-| ![Dashboard overview](https://raw.githubusercontent.com/znythlabs/pi-package-manager/main/docs/preview.png) | ![Mixed states](https://raw.githubusercontent.com/znythlabs/pi-package-manager/main/docs/states.png) |
+| ![Dashboard with paste box, 13 cards, and the pi-package-manager MGR card](https://raw.githubusercontent.com/znythlabs/pi-package-manager/main/docs/preview.png) | ![Preflight panel showing an Essential label, reasoning paragraph, and install/ignore actions for npm:pi-btw](https://raw.githubusercontent.com/znythlabs/pi-package-manager/main/docs/states.png) |
 
 ## What it does
 
