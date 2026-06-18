@@ -40,6 +40,32 @@ const HOME = process.env.USERPROFILE || process.env.HOME || AGENT_DIR;
 // Strict source allowlist — anything else is rejected before it reaches the shell.
 const SOURCE_RE = /^npm:@?[a-z0-9][\w.-]*(\/[a-z0-9][\w.-]*)?$/i;
 
+// Resolve the full path to the `pi` binary once at startup so we can spawn
+// it directly with shell:false. This avoids Node's DEP0190 deprecation
+// ("Passing args to a child process with shell option true can lead to
+// security vulnerabilities") and is more correct on Windows where `pi`
+// is a .cmd shim that needs the full extension to be invoked directly.
+function findPiOnPath() {
+    const isWin = process.platform === 'win32';
+    const probe = isWin ? 'where' : 'which';
+    try {
+        const r = spawnSync(probe, ['pi'], { encoding: 'utf8', windowsHide: true });
+        if (r.status !== 0) return null;
+        const candidates = r.stdout.split(/\r?\n/).map(s => s.trim()).filter(Boolean);
+        if (candidates.length === 0) return null;
+        if (!isWin) return candidates[0];
+        // On Windows, prefer .cmd / .bat / .exe over no-extension. The bare
+        // `pi` entry npm installs can be a POSIX shell script that Windows
+        // can't spawn directly with shell:false. The .cmd shim is what
+        // cmd.exe would actually invoke via PATHEXT.
+        const withExt = candidates.find(c => /\.(cmd|bat|exe|com)$/i.test(c));
+        return withExt || candidates[0];
+    } catch {
+        return null;
+    }
+}
+const PI_CMD = findPiOnPath();
+
 // --- Preflight + force-install plumbing -------------------------------------
 
 const PREFLIGHT_SHIM = path.join(__dirname, '..', 'bin', 'pi-preflight.mjs');
@@ -96,12 +122,35 @@ function readBody(req) {
 function runPi(args) {
     const t0 = Date.now();
     return new Promise((resolve) => {
-        // shell:true so Windows resolves pi.cmd from PATH. Source is allowlisted.
-        const child = spawn('pi', args, {
-            cwd: HOME,
-            shell: true,
-            windowsHide: true,
-        });
+        // Spawn strategy:
+        //   - If we resolved a real .exe / no-extension binary: spawn it
+        //     directly with shell:false. No DEP0190.
+        //   - If we resolved a Windows .cmd / .bat shim (the common case
+        //     for npm-installed CLIs): Node 18+ refuses to spawn .cmd
+        //     files with shell:false (EINVAL). The clean way to invoke
+        //     them is `cmd.exe /c <cmd> <args>` with shell:false on our
+        //     spawn — Node handles the Windows command-line escaping for
+        //     us, and DEP0190 is not triggered because we never set
+        //     shell:true ourselves.
+        //   - Fallback: bare 'pi' with shell:true. SOURCE_RE ensures
+        //     args are safe to concatenate into a shell string.
+        const cmd = PI_CMD || 'pi';
+        const isWin = process.platform === 'win32';
+        const isWindowsScript = isWin && /\.(cmd|bat)$/i.test(cmd);
+        let child;
+        if (isWindowsScript) {
+            child = spawn('cmd.exe', ['/c', cmd, ...args], {
+                cwd: HOME,
+                shell: false,
+                windowsHide: true,
+            });
+        } else {
+            child = spawn(cmd, args, {
+                cwd: HOME,
+                shell: !PI_CMD,  // shell:true only as a last-resort fallback
+                windowsHide: true,
+            });
+        }
         let stdout = '', stderr = '';
         child.stdout.on('data', d => { stdout += d; });
         child.stderr.on('data', d => { stderr += d; });
@@ -191,8 +240,21 @@ function snapshotStack() {
 }
 
 function readPiVersion() {
+    // Same strategy as runPi: prefer the resolved PI_CMD with shell:false,
+    // use cmd.exe /c on Windows for .cmd shims, fall back to shell:true only
+    // if PI_CMD couldn't be resolved at startup.
+    if (!PI_CMD) {
+        try {
+            const r = spawnSync('pi', ['--version'], { encoding: 'utf8', shell: true, windowsHide: true });
+            return (r.stdout || '').trim() || 'unknown';
+        } catch { return 'unknown'; }
+    }
+    const isWin = process.platform === 'win32';
+    const isWindowsScript = isWin && /\.(cmd|bat)$/i.test(PI_CMD);
     try {
-        const r = spawnSync('pi', ['--version'], { encoding: 'utf8', shell: true, windowsHide: true });
+        const r = isWindowsScript
+            ? spawnSync('cmd.exe', ['/c', PI_CMD, '--version'], { encoding: 'utf8', shell: false, windowsHide: true })
+            : spawnSync(PI_CMD, ['--version'], { encoding: 'utf8', shell: false, windowsHide: true });
         return (r.stdout || '').trim() || 'unknown';
     } catch {
         return 'unknown';
@@ -401,6 +463,7 @@ server.listen(PORT, HOST, () => {
     console.log(`  agent dir : ${AGENT_DIR}`);
     console.log(`  settings  : ${SETTINGS}`);
     console.log(`  html      : ${HTML_FILE}${HTML_FILE === PERSONAL_HTML ? '  (personal override)' : ''}`);
+    console.log(`  pi cmd    : ${PI_CMD || '<not on PATH — install/uninstall will use shell fallback>'}`);
     console.log('  Ctrl+C to stop.');
     console.log('');
 });
