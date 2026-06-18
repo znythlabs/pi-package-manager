@@ -23,9 +23,17 @@ Adds two slash commands to your pi agent:
 
 The dashboard is a self-contained HTML page that lists your installed extensions and lets you install or remove any npm-published pi package directly from the browser. No terminal round-trips, no copy-paste.
 
+### Paste-a-command preflight
+
+Above the package grid, the dashboard has a single paste box. Drop in `npm:some-package` (or `pi install npm:some-package`, or just the bare name) and click **Run preflight** — the server assembles a fact sheet about the package (npm metadata, your installed stack, your environment) and sends it to your configured pi LLM. The LLM returns a fit label and reasoning.
+
+Fit labels: **Essential** · **Recommended** · **Good** · **Caution** · **Low**
+
+The result panel shows the label, the reasoning, any concerns the LLM flagged, and up to 3 better alternatives from pi.dev/packages. From there you can install with one click, ignore the recommendation, or (if the LLM was unavailable) open a typed-confirm dialog to force-install anyway. Every force-install is audit-logged to `~/.pi/agent/pi-packages-audit.log`.
+
 ### Prebuilt package setup
 
-The dashboard ships with **12 proven pi packages** already listed. Fresh pi agent users don't need to search for good extensions — they're all one click away:
+The dashboard ships with **12 proven pi packages** already listed, plus a 13th card for `pi-package-manager` itself (marked `MGR` — the card host, no action button). Fresh pi agent users don't need to search for good extensions — they're all one click away:
 
 | Package | What it does |
 |---------|-------------|
@@ -108,6 +116,8 @@ This means the personal regen flow (`update_pi_packages.py`) still works: the da
 | `/api/health` | GET | Server health check |
 | `/api/install` | POST | Install a package (`{ "source": "npm:<name>" }`) |
 | `/api/uninstall` | POST | Uninstall a package (`{ "source": "npm:<name>" }`) |
+| `/api/preflight` | POST | LLM preflight (`{ "source": "npm:<name>" }` → `{ ok, label, reasoning, alternatives, concerns, ... }`) |
+| `/api/force-install` | POST | Force-install after typed-confirm (`{ "source": "npm:<name>", "phrase": "I understand the risks" }`); audit-logged |
 
 ### Security
 
@@ -123,10 +133,11 @@ pi-package-manager/
 ├── extensions/
 │   └── index.ts          # Pi extension entry point — /packages command
 ├── src/
-│   ├── server.mjs        # Bridge server (zero dependencies)
+│   ├── server.mjs        # Bridge server (zero external deps; uses @earendil-works/pi-ai for preflight)
 │   └── pi-packages.html  # Dashboard UI
 ├── bin/
-│   └── pi-package-manager.mjs  # CLI entry point (npx / global)
+│   ├── pi-package-manager.mjs  # CLI entry point (npx / global)
+│   └── pi-preflight.mjs        # LLM preflight shim (throwaway; moves upstream when pi gains a preflight subcommand)
 ├── package.json
 ├── LICENSE
 ├── tsconfig.json
